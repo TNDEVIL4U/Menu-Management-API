@@ -1,4 +1,4 @@
-package com.example.Menu.Management.API.exceptions;
-
-public class MenuExceptions {
-}
+//package com.example.Menu.Management.API.exceptions;
+//
+//public class MenuExceptions {
+//}
