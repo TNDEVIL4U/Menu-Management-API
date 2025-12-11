@@ -4,7 +4,7 @@ A lightweight REST API to manage restaurant menu items. Provides simple, validat
 
 ---
 
-## Owner / Disclaimer
+## Owner - Disclaimer
 
 Repository owner (GitHub ID): TNDEVIL4U  
 This repository and its contents are maintained by the owner above. Use, modify, and contribute following the project's license and contribution guidelines.
@@ -35,7 +35,10 @@ Menu-Management/
 │   │   ├── ItemNotFoundException.java
 │   │   └── GlobalExceptionHandler.java (optional improvement)
 │   │
-│   ├── dto/ (optional future expansion)
+│   ├── dto/
+│   │   ├── ItemMapper.java
+│   │   ├── ItemRequestDto.java
+│   │   └── ItemResponseDto.java
 │   ├── config/ (optional for CORS)
 │
 ├── src/main/resources/
@@ -178,7 +181,5 @@ These technologies are used across controllers, services, repositories, model va
 
 ## Postman Collection (importable)
 Import → Raw Text in Postman (contains endpoints for Get, Create, Update, Delete).
-
-(See collection JSON in original README for details.)
 
 Open to Suggest your Ideas, Mail here : [bhuvaneshwarts1@gmail.com](mailto:bhuvaneshwarts1@gmail.com)
