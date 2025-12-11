@@ -21,13 +21,8 @@ public class MenuService {
         return menuRepository.save(item);
     }
     public Item updateItem(Long id, Item item)  {
-        if(menuRepository.existsById(id)){
-            menuRepository.save(item);
-        }
-        else {
-            throw new ItemNotFoundException("Item not found");
-        }
-        return item;
+        menuRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Item not found"));
+        return menuRepository.save(item);
     }
     public void deleteItem(Long id) {
         menuRepository.delete(menuRepository.findById(id).orElseThrow(()->new ItemNotFoundException("Item not found")));
