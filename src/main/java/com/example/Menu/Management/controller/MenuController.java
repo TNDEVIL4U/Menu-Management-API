@@ -1,5 +1,7 @@
 package com.example.Menu.Management.controller;
 
+import com.example.Menu.Management.dto.ItemRequestDto;
+import com.example.Menu.Management.dto.ItemResponseDto;
 import com.example.Menu.Management.exceptions.ItemNotFoundException;
 import com.example.Menu.Management.model.Item;
 import com.example.Menu.Management.service.MenuService;
@@ -7,6 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import com.example.Menu.Management.dto.ItemMapper;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,13 +28,14 @@ public class MenuController {
         return new ResponseEntity<>(menuService.getItems(), HttpStatus.OK);
     }
     @PostMapping
-    public ResponseEntity<Item> createItem(@Valid @RequestBody Item item) {
-            return new ResponseEntity<>(menuService.createItem(item), HttpStatus.CREATED);
+    public ResponseEntity<ItemResponseDto> createItem(@Valid @RequestBody ItemRequestDto dto) {
+            Item item = menuService.createItem(ItemMapper.toEntity(dto));
+            return new ResponseEntity<>(ItemMapper.toDto(item), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateItem(@PathVariable long id,@Valid @RequestBody Item item) {
-            menuService.updateItem(id,item);
+    public ResponseEntity<String> updateItem(@PathVariable long id,@Valid @RequestBody ItemRequestDto dto) {
+            menuService.updateItem(id,dto);
             return new ResponseEntity<>("Item updated successfully", HttpStatus.OK);
     }
     @DeleteMapping("/{id}")
