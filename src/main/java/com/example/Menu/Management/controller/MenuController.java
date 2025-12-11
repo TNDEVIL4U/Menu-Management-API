@@ -1,13 +1,18 @@
 package com.example.Menu.Management.controller;
 
+import com.example.Menu.Management.exceptions.ItemNotFoundException;
 import com.example.Menu.Management.model.Item;
 import com.example.Menu.Management.service.MenuService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -19,33 +24,34 @@ public class MenuController {
     public ResponseEntity<List<Item>> getItems() {
         return new ResponseEntity<>(menuService.getItems(), HttpStatus.OK);
     }
-    @PostMapping("/create")
-    public ResponseEntity<?> createItem(@RequestBody Item item) {
-        try {
+    @PostMapping
+    public ResponseEntity<Item> createItem(@Valid @RequestBody Item item) {
             return new ResponseEntity<>(menuService.createItem(item), HttpStatus.CREATED);
-        }
-        catch (Exception e) {
-            return new ResponseEntity<String>(e.getMessage(),HttpStatus.BAD_REQUEST);
-        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateItem(@PathVariable long id,@RequestBody Item item) {
-        try {
+    public ResponseEntity<String> updateItem(@PathVariable long id,@Valid @RequestBody Item item) {
             menuService.updateItem(id,item);
             return new ResponseEntity<>("Item updated successfully", HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>("Item not found",HttpStatus.BAD_REQUEST);
-        }
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteItem(@PathVariable long id) {
-        try{
         menuService.deleteItem(id);
-        return new ResponseEntity<>("Item deleted",HttpStatus.OK);
+        return new ResponseEntity<>("Item deleted successfully",HttpStatus.OK);
     }
-        catch(Exception e){
-        return new ResponseEntity<>("Error Item not found",HttpStatus.BAD_REQUEST);
-        }
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage())
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+    @ExceptionHandler(value= ItemNotFoundException.class)
+    public ResponseEntity<String> handleException(ItemNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 }
