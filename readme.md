@@ -1,18 +1,17 @@
-# **📘 Menu Management API – Spring Boot**
+# Menu Management API — Spring Boot
 
-A RESTful API for managing restaurant menu items.
-Supports CRUD operations with validation, custom exceptions, structured responses, UML diagrams, and Postman documentation.
-
----
-
-## **👤 Author**
-
-**Bhuvaneshwar Ts**
-📧 **bhuvaneshwarts1@gmail.com**
+A lightweight REST API to manage restaurant menu items. Provides simple, validated CRUD endpoints, clear error handling, structured responses, and an importable Postman collection for quick testing.
 
 ---
 
-# **📁 Project Structure**
+## Owner - Disclaimer
+
+Repository owner (GitHub ID): TNDEVIL4U  
+This repository and its contents are maintained by the owner above. Use, modify, and contribute following the project's license and contribution guidelines.
+
+---
+
+## Project Structure
 
 ```
 Menu-Management/
@@ -36,7 +35,10 @@ Menu-Management/
 │   │   ├── ItemNotFoundException.java
 │   │   └── GlobalExceptionHandler.java (optional improvement)
 │   │
-│   ├── dto/ (optional future expansion)
+│   ├── dto/
+│   │   ├── ItemMapper.java
+│   │   ├── ItemRequestDto.java
+│   │   └── ItemResponseDto.java
 │   ├── config/ (optional for CORS)
 │
 ├── src/main/resources/
@@ -50,63 +52,39 @@ Menu-Management/
 
 ---
 
-# **🚀 Setup Instructions**
+## Quick Setup
 
-## **1️⃣ Requirements**
+Requirements:
+- Java 17+
+- Maven 3.8+
+- Spring Boot 3.x
+- Any IDE (IntelliJ recommended)
 
-* Java **17+**
-* Maven **3.8+**
-* Spring Boot **3.x**
-* Any IDE (IntelliJ recommended)
-
----
-
-## **2️⃣ Clone the Project**
-
+Clone and run:
 ```bash
-git clone https://github.com/your-repo/menu-management.git
-cd menu-management
-```
-
----
-
-## **3️⃣ Build and Run**
-
-Using Maven:
-
-```bash
+git clone https://github.com/TNDEVIL4U/Menu-Management-API.git
+cd Menu-Management-API
 mvn clean install
 mvn spring-boot:run
 ```
 
-Or run directly from IDE.
-
----
-
-## **4️⃣ Application URL**
-
+Application URL:
 ```
 http://localhost:8080
 ```
 
----
-
-# **📚 API Documentation**
-
-Base URL:
-
+Base API path:
 ```
 /api/items
 ```
 
 ---
 
-# **1️⃣ Get All Items**
+## API Endpoints
 
-### **GET /api/items**
-
-#### ✔ Sample Response (200 OK)
-
+1) Get All Items
+- GET /api/items
+- 200 OK sample:
 ```json
 [
   {
@@ -119,14 +97,9 @@ Base URL:
 ]
 ```
 
----
-
-# **2️⃣ Create Item**
-
-### **POST /api/items**
-
-#### 📤 Request Body
-
+2) Create Item
+- POST /api/items
+- Request:
 ```json
 {
   "name": "Pizza",
@@ -135,21 +108,9 @@ Base URL:
   "availability": true
 }
 ```
+- 201 Created sample response returns the created item.
 
-#### ✔ Response (201 Created)
-
-```json
-{
-  "id": 2,
-  "name": "Pizza",
-  "price": 250,
-  "category": "Italian",
-  "availability": true
-}
-```
-
-#### ❌ Validation Error (400 Bad Request)
-
+Validation error (400):
 ```json
 {
   "name": "Name cannot be blank",
@@ -157,18 +118,9 @@ Base URL:
 }
 ```
 
----
-
-# **3️⃣ Update Item**
-
-### **PUT /api/items/{id}**
-
-#### 📤 Request
-
-```
-PUT /api/items/2
-```
-
+3) Update Item
+- PUT /api/items/{id}
+- Request:
 ```json
 {
   "id": 2,
@@ -178,28 +130,15 @@ PUT /api/items/2
   "availability": true
 }
 ```
+- 200 OK: "Item updated successfully"
 
-#### ✔ Response (200 OK)
-
-```json
-"Item updated successfully"
-```
-
----
-
-# **4️⃣ Delete Item**
-
-### **DELETE /api/items/{id}**
-
-#### ✔ Response (200 OK)
-
-```json
-"Item deleted successfully"
-```
+4) Delete Item
+- DELETE /api/items/{id}
+- 200 OK: "Item deleted successfully"
 
 ---
 
-# **📌 Validation Rules**
+## Validation Rules
 
 | Field        | Rule                |
 | ------------ | ------------------- |
@@ -210,217 +149,37 @@ PUT /api/items/2
 
 ---
 
-# **⚠️ Exception Handling**
+## Exception Handling
 
-### **400 Bad Request – Validation Errors**
-
-Handled by:
-
+- Validation errors (400) handled via:
 ```java
 @ExceptionHandler(MethodArgumentNotValidException.class)
 ```
-
-### **404 Not Found – Item Missing**
-
-Thrown manually:
-
+- Not found (404):
 ```java
 throw new ItemNotFoundException("Item not found");
 ```
 
 ---
 
-# **📦 Technologies Used**
+## Technologies used throughout the repository
 
-* Spring Boot 3
-* Spring Web (REST)
-* Spring Data JPA
-* Hibernate
-* Jakarta Validation
-* Lombok
-* Maven
+- Java 17
+- Spring Boot 3.x (Spring Web / REST)
+- Spring Data JPA
+- Hibernate
+- Jakarta Bean Validation (javax / jakarta validation annotations)
+- Lombok (for boilerplate reduction)
+- Maven (project build & dependency management)
+- H2 / any JDBC-compatible DB (configurable via application.properties)
+- Postman (collection provided for easy testing)
+- (Optional) PlantUML for diagrams
 
----
-
-# **📤 Postman Collection (Importable)**
-
-Copy into Postman → *Import → Raw Text*
-
-```json
-{
-  "info": {
-    "name": "Menu Management API",
-    "_postman_id": "menu-management-1234",
-    "description": "Postman collection for Menu Management App",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Get All Items",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/api/items",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8080",
-          "path": ["api", "items"]
-        }
-      }
-    },
-    {
-      "name": "Create Item",
-      "request": {
-        "method": "POST",
-        "header": [
-          { "key": "Content-Type", "value": "application/json" }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"name\": \"Pizza\",\n    \"price\": 250,\n    \"category\": \"Italian\",\n    \"availability\": true\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8080/api/items",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8080",
-          "path": ["api", "items"]
-        }
-      }
-    },
-    {
-      "name": "Update Item",
-      "request": {
-        "method": "PUT",
-        "header": [
-          { "key": "Content-Type", "value": "application/json" }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"id\": 1,\n    \"name\": \"Updated Pizza\",\n    \"price\": 300,\n    \"category\": \"Italian\",\n    \"availability\": false\n}"
-        },
-        "url": {
-          "raw": "http://localhost:8080/api/items/1",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8080",
-          "path": ["api", "items", "1"]
-        }
-      }
-    },
-    {
-      "name": "Delete Item",
-      "request": {
-        "method": "DELETE",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/api/items/1",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8080",
-          "path": ["api", "items", "1"]
-        }
-      }
-    }
-  ]
-}
-```
+These technologies are used across controllers, services, repositories, model validation, and build configuration.
 
 ---
 
-# **🧩 UML DIAGRAMS**
+## Postman Collection (importable)
+Import → Raw Text in Postman (contains endpoints for Get, Create, Update, Delete).
 
-## **1️⃣ Class Diagram (ASCII)**
-
-```
-+------------------+
-|      Item        |
-+------------------+
-| id: Long         |
-| name: String     |
-| price: Double    |
-| category: String |
-| availability: Boolean |
-+------------------+
-
-+----------------------+
-|   MenuRepository     |
-+----------------------+
-
-+----------------------+
-|     MenuService      |
-+----------------------+
-| + getItems()         |
-| + createItem()       |
-| + updateItem()       |
-| + deleteItem()       |
-+----------------------+
-
-+----------------------+
-|   MenuController     |
-+----------------------+
-```
-
----
-
-## **2️⃣ Class Diagram (PlantUML)**
-
-```plantuml
-@startuml
-
-class Item {
-    Long id
-    String name
-    Double price
-    String category
-    Boolean availability
-}
-
-class MenuRepository {
-}
-
-class MenuService {
-    + List<Item> getItems()
-    + Item createItem(Item)
-    + Item updateItem(Long, Item)
-    + void deleteItem(Long)
-}
-
-class MenuController {
-    + getItems()
-    + createItem()
-    + updateItem()
-    + deleteItem()
-}
-
-class ItemNotFoundException
-
-MenuRepository <|-- JpaRepository
-MenuService --> MenuRepository
-MenuController --> MenuService
-MenuService --> ItemNotFoundException
-
-@enduml
-```
-
----
-
-## **3️⃣ Sequence Diagram (PlantUML)**
-
-```plantuml
-@startuml
-
-actor User
-User -> MenuController : PUT /api/items/{id}
-MenuController -> MenuService : updateItem(id, item)
-MenuService -> MenuRepository : findById(id)
-MenuRepository --> MenuService : Item found
-MenuService -> MenuRepository : save(updatedItem)
-MenuRepository --> MenuService : updated Item
-MenuService --> MenuController : success
-MenuController --> User : "Item updated successfully"
-
-@enduml
-```
-
+Open to Suggest your Ideas, Mail here : [bhuvaneshwarts1@gmail.com](mailto:bhuvaneshwarts1@gmail.com)
