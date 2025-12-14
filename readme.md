@@ -6,7 +6,9 @@ A lightweight REST API to manage restaurant menu items. Provides simple, validat
 
 ## Owner - Disclaimer
 
-Repository owner (GitHub ID): TNDEVIL4U  
+Repository owner (GitHub ID): TNDEVIL4U
+Name : Bhuvaneshwar TS
+Email id : bhuvaneshwarts1@gmail.com
 This repository and its contents are maintained by the owner above. Use, modify, and contribute following the project's license and contribution guidelines.
 
 ---
