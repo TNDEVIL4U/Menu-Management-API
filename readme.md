@@ -32,18 +32,15 @@ Menu-Management/
 │   │   └── Item.java
 │   │
 │   ├── exceptions/
-│   │   ├── ItemNotFoundException.java
-│   │   └── GlobalExceptionHandler.java (optional improvement)
+│   │   └── ItemNotFoundException.java
 │   │
 │   ├── dto/
 │   │   ├── ItemMapper.java
 │   │   ├── ItemRequestDto.java
 │   │   └── ItemResponseDto.java
-│   ├── config/ (optional for CORS)
 │
 ├── src/main/resources/
-│   ├── application.properties
-│   └── data.sql (optional)
+│   └──application.properties
 │
 ├── pom.xml
 ├── README.md
@@ -72,19 +69,20 @@ Application URL:
 ```
 http://localhost:8080
 ```
+Base URL:
 
-Base API path:
 ```
 /api/items
 ```
 
 ---
 
-## API Endpoints
+# **1️⃣ Get All Items**
 
-1) Get All Items
-- GET /api/items
-- 200 OK sample:
+### **GET /api/items**
+
+#### ✔ Sample Response (200 OK)
+
 ```json
 [
   {
@@ -97,9 +95,14 @@ Base API path:
 ]
 ```
 
-2) Create Item
-- POST /api/items
-- Request:
+---
+
+# **2️⃣ Create Item**
+
+### **POST /api/items**
+
+#### 📤 Request Body
+
 ```json
 {
   "name": "Pizza",
@@ -108,9 +111,21 @@ Base API path:
   "availability": true
 }
 ```
-- 201 Created sample response returns the created item.
 
-Validation error (400):
+#### ✔ Response (201 Created)
+
+```json
+{
+  "id": 2,
+  "name": "Pizza",
+  "price": 250,
+  "category": "Italian",
+  "availability": true
+}
+```
+
+#### ❌ Validation Error (400 Bad Request)
+
 ```json
 {
   "name": "Name cannot be blank",
@@ -118,9 +133,18 @@ Validation error (400):
 }
 ```
 
-3) Update Item
-- PUT /api/items/{id}
-- Request:
+---
+
+# **3️⃣ Update Item**
+
+### **PUT /api/items/{id}**
+
+#### 📤 Request
+
+```
+PUT /api/items/2
+```
+
 ```json
 {
   "id": 2,
@@ -130,13 +154,27 @@ Validation error (400):
   "availability": true
 }
 ```
-- 200 OK: "Item updated successfully"
 
-4) Delete Item
-- DELETE /api/items/{id}
-- 200 OK: "Item deleted successfully"
+#### ✔ Response (200 OK)
+
+```json
+"Item updated successfully"
+```
 
 ---
+
+# **4️⃣ Delete Item**
+
+### **DELETE /api/items/{id}**
+
+#### ✔ Response (200 OK)
+
+```json
+"Item deleted successfully"
+```
+
+---
+
 
 ## Validation Rules
 
@@ -181,5 +219,85 @@ These technologies are used across controllers, services, repositories, model va
 
 ## Postman Collection (importable)
 Import → Raw Text in Postman (contains endpoints for Get, Create, Update, Delete).
+{
+  "info": {
+    "name": "Menu Management API",
+    "_postman_id": "menu-management-1234",
+    "description": "Postman collection for Menu Management App",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Items",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/items",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "items"]
+        }
+      }
+    },
+    {
+      "name": "Create Item",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Pizza\",\n    \"price\": 250,\n    \"category\": \"Italian\",\n    \"availability\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/items",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "items"]
+        }
+      }
+    },
+    {
+      "name": "Update Item",
+      "request": {
+        "method": "PUT",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"id\": 1,\n    \"name\": \"Updated Pizza\",\n    \"price\": 300,\n    \"category\": \"Italian\",\n    \"availability\": false\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/items/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "items", "1"]
+        }
+      }
+    },
+    {
+      "name": "Delete Item",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/items/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "items", "1"]
+        }
+      }
+    }
+  ]
+}
+
+---
 
 Open to Suggest your Ideas, Mail here : [bhuvaneshwarts1@gmail.com](mailto:bhuvaneshwarts1@gmail.com)
