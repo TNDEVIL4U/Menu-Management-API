@@ -222,6 +222,24 @@ These technologies are used across controllers, services, repositories, model va
 
 ## Postman Collection (importable)
 Import → Raw Text in Postman (contains endpoints for Get, Create, Update, Delete).
+
+This repository contains a **Postman Collection** for testing the Menu Management API.  
+You can use it to quickly interact with the endpoints for **Get, Create, Update, and Delete** operations.
+
+---
+
+## 🚀 How to Use
+
+1. Open **Postman**.
+2. Click **Import** → **Raw Text**.
+3. Paste the JSON below.
+4. Save and start testing the API.
+
+---
+
+## 📦 Postman Collection (Importable)
+
+```json
 {
   "info": {
     "name": "Menu Management API",
@@ -300,6 +318,7 @@ Import → Raw Text in Postman (contains endpoints for Get, Create, Update, Dele
     }
   ]
 }
+
 
 ---
 
